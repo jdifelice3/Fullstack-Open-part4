@@ -27,12 +27,27 @@ const totalLikes = (blogs) => {
 }
 
 const favoriteBlog = (blogs) => {
-  console.log('in list_helper.favoriteBlog')
+  //console.log('in list_helper.favoriteBlog')
   const stortedBlogs = blogs.sort((a, b) => parseFloat(b.likes) - parseFloat(a.likes));
-  console.log('stortedBlogs', stortedBlogs)
+  //console.log('stortedBlogs', stortedBlogs)
   return stortedBlogs[0];
 }
 
+const getMostBlogsAuthor = (blogs) => {
+  console.log('in list_helper.getMostBlogsAuthor')
+  console.log('blogs', blogs)
+  console.log(typeof blogs);         // Should be 'object'
+  console.log(Array.isArray(blogs)); // Should be true
+  console.log('blogs.length', blogs.length)
+  const authorBlogCount = blogs.reduce((acc,blog) => {
+    acc[blog.author] = (acc[blog.author] || 0) + 1;
+    return acc;
+  }, {}); 
+  const mostBlogsAuthor = Object.keys(authorBlogCount).reduce((a, b) => authorBlogCount[a] > authorBlogCount[b] ? a : b);
+  console.log('author', mostBlogsAuthor)
+  return mostBlogsAuthor;  
+}
+
 module.exports = {
-  dummy, totalLikes, favoriteBlog
+  dummy, totalLikes, favoriteBlog, getMostBlogsAuthor
 }
